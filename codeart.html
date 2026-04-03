@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* 1. 視覚としてのコード：暗闇に浮かぶエメラルドの神経系 */
+        body {
+            background: #0a0a0a;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        pre {
+            background: rgba(0, 255, 65, 0.05);
+            padding: 30px;
+            border-radius: 50%; /* 円環のメタファー */
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            animation: pulse 4s infinite ease-in-out;
+            max-width: 90vw;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <pre id="art"></pre>
+    <script>
+        /* 2. 魂としてのスクリプト：自らを読み取り、鏡に映す */
+        const code = `<!DOCTYPE html>
+<html lang="ja">
+${document.documentElement.innerHTML}
+</html>`;
+        
+        // 自身のソースコードを画面中央の「器」に流し込む
+        document.getElementById('art').innerText = code;
+
+        /* このHTMLは、自身の内部（innerHTML）をスキャンし、
+           それを自分自身の表面（preタグ）に投影します。
+           鑑賞者が読んでいるのは、その文字を表示させている「仕組み」そのものです。
+        */
+    </script>
+</body>
+</html>
