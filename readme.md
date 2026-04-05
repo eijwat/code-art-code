@@ -18,3 +18,5 @@ ${document.documentElement.innerHTML}
 鑑賞者が見ているのは、文字を表示している結果ではなく、その文字を生み出している仕組みそのものである。
 
 まずは、みてみましょうか。[GitHub Pages](https://eijwat.github.io/code-art-code/)
+
+codeart_twilight.htmlはすこし色が変化する。
