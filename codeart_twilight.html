@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* 1. 視覚としてのコード：暗闇のなかで移ろう夕暮れの神経系 */
+        body {
+            background: #0a0a0a;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        pre {
+            padding: 30px;
+            border-radius: 50%;
+            max-width: 90vw;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.8rem;
+            line-height: 1.2;
+            animation: pulse 10s infinite ease-in-out;
+            transition: color 0.5s, text-shadow 0.5s, background 0.5s;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <pre id="art"></pre>
+    <script>
+        /* 2. 魂としてのスクリプト：自らを読み取り、刻一刻と色を変えながら鏡に映す */
+
+        // 自身のソースコードを器に流し込む
+        const code = `<!DOCTYPE html>\n<html lang="ja">\n${document.documentElement.innerHTML}\n</html>`;
+        const el = document.getElementById('art');
+        el.innerText = code;
+
+        /* 3. 夕暮れの時間：色相がランダムに揺らぎながら漂う
+              ── Ornstein-Uhlenbeck 過程で、酔歩しつつも中心に引き戻される ── */
+
+        let hue = 30;               // 夕焼けの橙から始まる
+        let velocity = 0;           // 色相の変化速度
+        const dt = 0.05;            // 時間刻み
+        const meanReversion = 0.02; // 中心への引き戻し（弱く）
+        const volatility = 1.8;     // ランダムな揺らぎの強さ
+        const center = 200;         // 長い時間をかけて漂着する先（藍色の夜空）
+
+        function step() {
+            // OU過程: dX = θ(μ - X)dt + σdW
+            const dW = (Math.random() - 0.5) * 2; // Wiener増分の近似
+            velocity += meanReversion * (center - hue) * dt + volatility * dW;
+            velocity *= 0.98; // 減衰（急変を防ぐ）
+            hue += velocity;
+            if (hue < 0) hue += 360;
+            if (hue >= 360) hue -= 360;
+
+            // 彩度と明度もわずかに揺らす
+            const sat = 70 + Math.sin(Date.now() * 0.0003) * 20;
+            const lit = 55 + Math.sin(Date.now() * 0.00017) * 15;
+
+            const color = `hsl(${hue}, ${sat}%, ${lit}%)`;
+            const glow  = `hsl(${hue}, ${sat}%, ${lit + 10}%)`;
+
+            el.style.color = color;
+            el.style.textShadow = `0 0 12px ${glow}, 0 0 30px ${glow}`;
+            el.style.background = `hsla(${hue}, ${sat}%, ${lit}%, 0.04)`;
+
+            requestAnimationFrame(step);
+        }
+        step();
+
+        /* このHTMLは、自身の内部をスキャンし、
+           それを自分自身の表面に投影しつつ、
+           Ornstein-Uhlenbeck確率過程によって
+           色相をランダムに——しかし穏やかに——漂わせます。
+           夕暮れから夜へ、あるいは思いがけず朝焼けへ。
+           鑑賞者が読んでいるのは、
+           その色を変えている「仕組み」そのものです。 */
+    </script>
+</body>
+</html>
